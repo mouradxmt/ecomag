@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<section class="clean-block">
+<div class="container">
+<div class="block-heading">
+                    <h2 class="text-info">{% trans title %}</h2>
+</div>
+        <section id="loginForm">
+            <form action="." method="post" class="form-horizontal">
+                {% csrf_token %}
+
+                <hr />
+                <div class="form-group">
+                    <label for="id_username" class="col-md-2 control-label">{% trans 'username' %}</label>
+                    <div class="col-md-10">
+                        {{ form.username }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_password" class="col-md-2 control-label">{% trans 'password' %}</label>
+                    <div class="col-md-10">
+                        {{ form.password }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="hidden" name="next" value="/" />
+                        <input type="submit" value="{% trans 'Log in' %}" class="btn btn-default" />
+                    </div>
+                </div>
+                {% if form.errors %}
+                <p class="validation-summary-errors">Please enter a correct user name and password.</p>
+                {% endif %}
+            </form>
+        </section>
+    </div>
+        <section id="socialLoginForm"></section>
+</section>
+{% endblock %}
+
+
+{% block scripts %}
+
+    {% load static %}
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+{% endblock %}
