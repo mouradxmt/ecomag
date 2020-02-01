@@ -1,42 +1,39 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<section class="clean-block">
-<div class="container">
-<div class="block-heading">
+ <section class="clean-block clean-form dark">
+            <div class="container">
+                <div class="block-heading">
                     <h2 class="text-info">{% trans title %}</h2>
-</div>
-        <section id="loginForm">
-            <form action="." method="post" class="form-horizontal">
+                </div>
+             <form action="." method="post" class="form-horizontal">
                 {% csrf_token %}
 
                 <hr />
                 <div class="form-group">
-                    <label for="id_username" class="col-md-2 control-label">{% trans 'username' %}</label>
-                    <div class="col-md-10">
+                    <label for="id_username">{% trans 'username' %}</label>
+                    <div>
                         {{ form.username }}
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="id_password" class="col-md-2 control-label">{% trans 'password' %}</label>
-                    <div class="col-md-10">
+                    <label for="id_password">{% trans 'password' %}</label>
+                    <div>
                         {{ form.password }}
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
+                    <div>
                         <input type="hidden" name="next" value="/" />
-                        <input type="submit" value="{% trans 'Log in' %}" class="btn btn-default" />
+                        <input type="submit" value="{% trans 'Log in' %}" class="btn btn-primary" />
                     </div>
                 </div>
                 {% if form.errors %}
                 <p class="validation-summary-errors">Please enter a correct user name and password.</p>
                 {% endif %}
             </form>
+            </div>
         </section>
-    </div>
-        <section id="socialLoginForm"></section>
-</section>
 {% endblock %}
 
 
