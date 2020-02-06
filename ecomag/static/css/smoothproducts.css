@@ -172,4 +172,84 @@ html, body {
     bottom: 25px;
   }
 }
+.carousel-item {
+    height: 39em;
+    background-color: #777;
+}
 
+
+.carousel-caption {
+    bottom: 13em;
+    z-index: 10;
+    margin: 0 auto;
+}
+
+/* Gibson Buttons */
+
+a.animated-button:link,
+a.animated-button:visited {
+	position: relative;
+	padding: 9px 35px;
+	color: #777;
+	font-size: 16px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	overflow: hidden;
+	letter-spacing: 3px;
+	border-radius: 0;
+	z-index: 9;
+	text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	transition: all 1s ease;
+}
+
+a.animated-button:link:after,
+a.animated-button:visited:after {
+	content: "";
+	position: absolute;
+	height: 0%;
+	left: 50%;
+	top: 50%;
+	width: 150%;
+	z-index: -1;
+	-webkit-transition: all 0.75s ease 0s;
+	-moz-transition: all 0.75s ease 0s;
+	-o-transition: all 0.75s ease 0s;
+	transition: all 0.75s ease 0s;
+}
+
+a.animated-button:link:hover,
+a.animated-button:visited:hover {
+	color: #fff;
+	text-shadow: none;
+}
+
+a.animated-button:link:hover:after,
+a.animated-button:visited:hover:after {
+	height: 450%;
+}
+
+a.animated-button.gibson-three {
+	border: 2px solid #ff4e00;
+	color: #fff;
+}
+
+a.animated-button.gibson-three:after {
+	opacity: 0;
+    background-image: -webkit-linear-gradient( transparent 50%, #ff4e0082 50%);
+	background-image:-moz-linear-gradient( transparent 50%, #ff4e0082 50%);
+	background-size: 10px 10px;
+	-moz-transform: translateX(-50%) translateY(-50%) rotate(90deg);
+	-ms-transform: translateX(-50%) translateY(-50%) rotate(90deg);
+	-webkit-transform: translateX(-50%) translateY(-50%) rotate(90deg);
+	transform: translateX(-50%) translateY(-50%) rotate(90deg);
+}
+
+a.animated-button.gibson-three:hover:after {
+	height: 600% !important;
+	opacity: 1;
+	color: #ff4e00;
+}

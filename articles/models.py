@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Category(models.Model):
     name = models.CharField(max_length=300)
     #primaryCategory = models.BooleanField(default=False)
@@ -23,7 +22,7 @@ class Category(models.Model):
 
 # Product Model
 class Product(models.Model):
-    mainImage = models.ImageField(upload_to='products/', blank=True, verbose_name='Image')
+    mainImage = models.ImageField(upload_to='photos/', blank=True, verbose_name='Image')
     name = models.CharField(max_length=300, verbose_name='Nom de produit')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     preview_text = models.TextField(max_length=200, verbose_name='Description courte')

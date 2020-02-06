@@ -78,8 +78,11 @@ WSGI_APPLICATION = 'ecomag.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ecomagDb',
+        'USER': 'postgres',
+        'PASSWORD': '159753',
+        'HOST': 'localhost'
     }
 }
 
@@ -124,3 +127,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'ecomag/static')
 ]
+
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_URL='/media/'
