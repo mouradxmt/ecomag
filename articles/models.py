@@ -1,5 +1,5 @@
 from django.db import models
-
+# TODO : try and catch the 404 error !
 
 class Category(models.Model):
     name = models.CharField(max_length=300)
@@ -38,7 +38,7 @@ class Product(models.Model):
         verbose_name_plural = "Articles"
 
     def get_cat_list(self):
-        k = self.category  # for now ignore this instance method
+        k = self.category
 
         breadcrumb = ["dummy"]
         while k is not None:

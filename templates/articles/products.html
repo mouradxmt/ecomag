@@ -61,8 +61,9 @@
         <div class="col-md-2">
           <h3>Categories</h3>
           <ul>
-            <li><a href="">femme</a></li>
-            <li><a href="">homme</a></li>
+              {% for category in categories %}
+              <li><a href="{% url 'category' category.slug %}">{{ category }}</a></li>
+              {% endfor %}
           </ul>
         </div>
         <div class="col-md-10">

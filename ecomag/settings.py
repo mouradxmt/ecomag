@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'ecomag.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'eco',
+        'NAME': 'ecomagDb',
         'USER': 'postgres',
-        'PASSWORD': 'Mybest36',
+        'PASSWORD': '159753',
         'HOST': 'localhost'
     }
 }
