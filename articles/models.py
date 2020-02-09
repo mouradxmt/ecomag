@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import datetime
+from pages.models import UserProfileInfo
 # TODO : try and catch the 404 error !
 
 class Category(models.Model):
@@ -29,6 +31,7 @@ class Product(models.Model):
     preview_text = models.TextField(max_length=200, verbose_name='Description courte')
     detail_text = models.TextField(max_length=1000, verbose_name='Desciption du produit')
     price = models.FloatField()
+    date = models.DateTimeField(default=datetime.now, blank=True)
 
     def __str__(self):
         return self.name
@@ -51,3 +54,17 @@ class Product(models.Model):
     @staticmethod
     def by_category(slug):
         return Product.objects.filter(category=Category.objects.get(slug=slug)).all()
+
+#Comments
+class Comment(models.Model):
+    UserId = models.ForeignKey(UserProfileInfo, on_delete=models.DO_NOTHING)
+    ProductId = models.ForeignKey(Product, on_delete=models.CASCADE)
+    Rating = models.IntegerField(verbose_name='rating')
+    content = models.TextField(max_length=200, verbose_name='Comment')
+
+#panier
+class Cart(models.Model):
+    UserId = models.ForeignKey(UserProfileInfo, on_delete=models.DO_NOTHING)
+    ProductId = models.ForeignKey(Product, on_delete=models.CASCADE)
+    amount = models.IntegerField(verbose_name='amount', default=1)
+
