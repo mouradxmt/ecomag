@@ -12,18 +12,6 @@ urlpatterns = [
    #path('', pages_views.index),
     path('', include('pages.urls')),
     path('articles/', include('articles.urls')),
-    path('login/', LoginView.as_view
-        (
-        template_name='pages/login.html',
-        authentication_form=forms.BootstrapAuthenticationForm,
-        extra_context=
-        {
-            'title': 'Log in',
-            'year': datetime.now().year,
-        }
-    ),
-                                      name='login'),
-    path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('admin/', admin.site.urls),
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

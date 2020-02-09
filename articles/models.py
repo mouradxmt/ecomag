@@ -1,8 +1,9 @@
 from django.db import models
 
+
 class Category(models.Model):
     name = models.CharField(max_length=300)
-    #primaryCategory = models.BooleanField(default=False)
+    # primaryCategory = models.BooleanField(default=False)
     slug = models.SlugField(default='', verbose_name='Identifiant')
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
 
@@ -46,3 +47,7 @@ class Product(models.Model):
         for i in range(len(breadcrumb) - 1):
             breadcrumb[i] = '/'.join(breadcrumb[-1:i - 1:-1])
         return breadcrumb[-1:0:-1]
+
+    @staticmethod
+    def by_category(slug):
+        return Product.objects.filter(category=Category.objects.get(slug=slug)).all()

@@ -1,27 +1,30 @@
 from django.shortcuts import render
 from .models import Product
 from .models import Category
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
-def articles(request,cat=None):
 
-    articles= Product.objects.order_by('name')
-    paginator = Paginator(articles,2)
-    page_number = request.GET.get('page')
-    paged_articles = paginator.get_page(page_number)
-
+def articles(request):
+    articles= Product.objects.all()
+    categories = Category.objects.all()
     context={
-        'articles': paged_articles,
+        'articles': articles,
+        'categories': categories
     }
     return render(request, 'articles/products.html', context)
 
-def product(request,product_id):
-    product=get_objects_or_404(Product, pk=product_id)
+
+def articles_category(request, slug='homme'):
+    articles_by_cat = Product.by_category(slug=slug)
     context = {
-        'article': product
+        'articles': articles_by_cat
     }
-    return render(request, 'articles/product.html', context)
+    return render(request, 'articles/products.html', context)
+
+
+def product(request):
+    return render(request, 'articles/product.html')
+
 
 def search(request):
     return render(request, 'articles/search.html')
