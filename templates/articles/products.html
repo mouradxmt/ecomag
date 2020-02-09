@@ -62,28 +62,32 @@
           <h3>Categories</h3>
           <ul>
               {% for category in categories %}
-              <li><a href="{% url 'category' category.slug %}">{{ category }}</a></li>
+              <li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
               {% endfor %}
           </ul>
         </div>
         <div class="col-md-10">
           <div class="row">
             {% if articles %}
-              {% for listing in articles %}
-                <div class="col-md-4">
-                    <div class="card" style="width: 18rem;">
-                      <img src="{{ listing.mainImage.url }}"  style="width:286px;height:250px" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title " style="text-align:center">{{ listing.name }}</h5>
-                        <h5 class="card-title" style="float:right"><span class="badge badge-pill badge-primary">${{ listing.price }}</span></h5>
-                         <h5 class="card-title" style="color:#007bff">{{ listing.category }}</h5>
-                        <hr/>
-                        <p class="card-text">{{ listing.preview_text  }}</p>
-                        <a href="#" class="btn btn-info btn-center">Details</a>
+                {% for listing in articles %}
+                  <div class="col-md-4">
+                      <div class="card" style="width: 18rem;">
+                        <img src="{{ listing.mainImage.url }}"  style="width:286px;height:250px" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title " style="text-align:center">{{ listing.name }}</h5>
+                          <h5 class="card-title" style="float:right"><span class="badge badge-pill badge-primary">${{ listing.price }}</span></h5>
+                           <h5 class="card-title" style="color:#007bff">{{ listing.category }}</h5>
+                          <hr/>
+                          <p class="card-text">{{ listing.preview_text  }}</p>
+                          <a href="#" class="btn btn-info btn-center">Details</a>
+                        </div>
                       </div>
-                    </div>
-                </div>
-            {% endfor %}
+                  </div>
+              {% endfor %}
+            {% else %}
+            <div class="col-md-4">
+              <h1 style="position:center;color:red">No articles available for this category!!</h1>
+            </div>
             {% endif %}
           </div>
 
