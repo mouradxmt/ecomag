@@ -56,48 +56,78 @@
   </section>
 -->
 
-    <div class="container">
+    <div class="container" >
       <div class="row">
-        {% if articles %}
-          {% for listing in articles %}
-            <div class="card" style="width: 18rem;">
-              <img src="{{ listing.mainImage.url }}"  style="width:286px;height:250px" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title " style="text-align:center;font-family:cursive">{{ listing.name }}</h5>
-                <h5 class="card-title" style="float:right"><span class="badge badge-pill badge-primary">${{ listing.price }}</span></h5>
-                 <h5 class="card-title" style="color:#007bff">{{ listing.category }}</h5>
-                <hr/>
-                <p class="card-text">{{ listing.preview_text  }}</p>
-                <a href="#" class="btn btn-info btn-center">Details</a>
-              </div>
-            </div>
-        {% endfor %}
-        {% endif %}
-      </div>
-      <br/>
-       <div class="row">
-        <div class="col-md-12">
-          <ul class="pagination">
-            <li class="page-item disabled">
-              <a class="page-link" href="#">&laquo;</a>
-            </li>
-            <li class="page-item active">
-              <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">&raquo;</a>
-            </li>
+        <div class="col-md-2">
+          <h3>Categories</h3>
+          <ul>
+            <li><a href="">femme</a></li>
+            <li><a href="">homme</a></li>
           </ul>
+        </div>
+        <div class="col-md-10">
+          <div class="row">
+            {% if articles %}
+              {% for listing in articles %}
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                      <img src="{{ listing.mainImage.url }}"  style="width:286px;height:250px" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title " style="text-align:center">{{ listing.name }}</h5>
+                        <h5 class="card-title" style="float:right"><span class="badge badge-pill badge-primary">${{ listing.price }}</span></h5>
+                         <h5 class="card-title" style="color:#007bff">{{ listing.category }}</h5>
+                        <hr/>
+                        <p class="card-text">{{ listing.preview_text  }}</p>
+                        <a href="#" class="btn btn-info btn-center">Details</a>
+                      </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endif %}
+          </div>
+
+          <br/>
+          <div class="row">
+          <div class="col-md-12">
+            {% if articles.has_other_pages%}
+              <ul class="pagination">
+                {% if articles.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{articles.previous_page_number}}">&laquo;</a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="">&laquo;</a>
+                  </li>
+                {%endif%}
+
+                {% for i in articles.paginator.page_range %}
+                   {% if articles.number == i %}
+                      <li class="page-item active">
+                        <a class="page-link">{{i}}</a>
+                      </li>
+                   {% else %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{i}}">{{i}}</a>
+                      </li>
+                   {% endif%}
+                {%endfor%}
+                {% if articles.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{articles.next_page_number}}">&raquo;</a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="">&raquo;</a>
+                  </li>
+                {%endif%}
+              </ul>
+            {% endif%}
+          </div>
+        </div>
         </div>
       </div>
 </div>
-
 </html>
 
 {% endblock %}
