@@ -1,12 +1,21 @@
+import itertools
+
 from django.db import models
 from datetime import datetime
+
+from django.utils.text import slugify
+
+from ecomag import settings
 from pages.models import UserProfileInfo
-# TODO : try and catch the 404 error !
+
 
 class Category(models.Model):
     name = models.CharField(max_length=300)
-    # primaryCategory = models.BooleanField(default=False)
-    slug = models.SlugField(default='', verbose_name='Identifiant')
+    slug = models.SlugField(
+        default='',
+        editable=False,
+        max_length=50,
+    )
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -22,11 +31,34 @@ class Category(models.Model):
         verbose_name = "Catégorie"
         verbose_name_plural = "Catégories"
 
+    def _generate_slug(self):
+        max_length = self._meta.get_field('slug').max_length
+        value = self.name
+        slug_candidate = slug_original = slugify(value, allow_unicode=True)
+        for i in itertools.count(1):
+            if not Category.objects.filter(slug=slug_candidate).exists():
+                break
+            slug_candidate = '{}-{}'.format(slug_original, i)
+
+        self.slug = slug_candidate
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self._generate_slug()
+
+        super().save(*args, **kwargs)
+
 
 # Product Model
 class Product(models.Model):
     mainImage = models.ImageField(upload_to='photos/', blank=True, verbose_name='Image')
-    name = models.CharField(max_length=300, verbose_name='Nom de produit')
+    name = models.CharField(max_length=50, verbose_name='Nom de produit')
+    slug = models.SlugField(
+        default='',
+        editable=False,
+        max_length=50,
+    )
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     preview_text = models.TextField(max_length=200, verbose_name='Description courte')
     detail_text = models.TextField(max_length=1000, verbose_name='Desciption du produit')
@@ -51,9 +83,28 @@ class Product(models.Model):
             breadcrumb[i] = '/'.join(breadcrumb[-1:i - 1:-1])
         return breadcrumb[-1:0:-1]
 
+    def _generate_slug(self):
+        max_length = self._meta.get_field('slug').max_length
+        value = self.name
+        slug_candidate = slug_original = slugify(value, allow_unicode=True)
+        for i in itertools.count(1):
+            if not Product.objects.filter(slug=slug_candidate).exists():
+                break
+            slug_candidate = '{}-{}'.format(slug_original, i)
+
+        self.slug = slug_candidate
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self._generate_slug()
+
+        super().save(*args, **kwargs)
+
     @staticmethod
     def by_category(slug):
-        return Product.objects.filter(category=Category.objects.get(slug=slug)).all()
+        category_queryset = Category.objects.filter(slug=slug)
+        #theSlug = [x.slug for x in category_queryset][0]
+        return Product.objects.filter(category=category_queryset[0]).all()
 
 #Comments
 class Comment(models.Model):

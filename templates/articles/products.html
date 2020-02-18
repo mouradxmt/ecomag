@@ -1,23 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+    <!-- Breadcrumb -->
+    <section id="bc" class="mt-3">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="fas fa-home"></i>Home</a></li>
+                    {% for slug,name in breadcrumbs %}
+                        <li><a href="/category/{{ slug }}">{{ name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
 
-  <!-- Breadcrumb -->
-  <section id="bc" class="mt-3">
-    <div class="container">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'index' %}">
-              <i class="fas fa-home"></i> Home</a>
-          </li>
-          <li class="breadcrumb-item active"> Browse articles</li>
-        </ol>
-      </nav>
-    </div>
-  </section>
+    </section>
 
-  <!-- Listings
+{% if sub_categories %}
+    <h3>Sub Categories</h3>
+    {% for i in sub_categories %}
+        <a href="{{ i.slug }}"> {{ i.name }} </a>
+    {% endfor %}
+{% endif %}
+
+
+    <!-- Listings
   <section id="listings" class="py-4">
     <div class="container">
       <div class="row">
@@ -55,84 +62,94 @@
     </div>
   </section>
 -->
+{% if sub_categories %}
+    <h3>Sub Categories</h3>
+    {% for i in sub_categories %}
+        <a href="{{ i.slug }}"> {{ i.name }} </a>
+    {% endfor %}
+{% endif %}
 
-    <div class="container" >
-      <div class="row">
-        <div class="col-md-2">
-          <h3>Categories</h3>
-          <ul>
-              {% for category in categories %}
-              <li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
-              {% endfor %}
-          </ul>
-        </div>
-        <div class="col-md-10">
-          <div class="row">
-            {% if articles %}
-                {% for listing in articles %}
-                  <div class="col-md-4">
-                      <div class="card" style="width: 18rem;">
-                        <img src="{{ listing.mainImage.url }}"  style="width:286px;height:250px" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title " style="text-align:center">{{ listing.name }}</h5>
-                          <h5 class="card-title" style="float:right"><span class="badge badge-pill badge-primary">${{ listing.price }}</span></h5>
-                           <h5 class="card-title" style="color:#007bff">{{ listing.category }}</h5>
-                          <hr/>
-                          <p class="card-text">{{ listing.preview_text  }}</p>
-                          <a href="#" class="btn btn-info btn-center">Details</a>
-                        </div>
-                      </div>
-                  </div>
-              {% endfor %}
-            {% else %}
-            <div class="col-md-4">
-              <h1 style="position:center;color:red">No articles available for this category!!</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <h3>Categories</h3>
+
+                <ul>
+                    {% for category in categories %}
+                        <li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
             </div>
-            {% endif %}
-          </div>
+            <div class="col-md-10">
+                <div class="row">
+                    {% if articles %}
+                        {% for listing in articles %}
+                            <div class="col-md-4">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="{{ listing.mainImage.url }}" style="width:286px;height:250px"
+                                         class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title " style="text-align:center">{{ listing.name }}</h5>
+                                        <h5 class="card-title" style="float:right"><span
+                                                class="badge badge-pill badge-primary">${{ listing.price }}</span></h5>
+                                        <h5 class="card-title" style="color:#007bff">{{ listing.category }}</h5>
+                                        <hr/>
+                                        <p class="card-text">{{ listing.preview_text }}</p>
+                                        <a class="btn btn-info btn-center" href="{% url 'category' listing.slug %}">Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-md-4">
+                            <h1 style="position:center;color:red">No articles available for this category!!</h1>
+                        </div>
+                    {% endif %}
+                </div>
 
-          <br/>
-          <div class="row">
-          <div class="col-md-12">
-            {% if articles.has_other_pages%}
-              <ul class="pagination">
-                {% if articles.has_previous %}
-                  <li class="page-item">
-                    <a class="page-link" href="?page={{articles.previous_page_number}}">&laquo;</a>
-                  </li>
-                {% else %}
-                  <li class="page-item disabled">
-                    <a class="page-link" href="">&laquo;</a>
-                  </li>
-                {%endif%}
+                <br/>
+                <div class="row">
+                    <div class="col-md-12">
+                        {% if articles.has_other_pages %}
+                            <ul class="pagination">
+                                {% if articles.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="?page={{ articles.previous_page_number }}">&laquo;</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="">&laquo;</a>
+                                    </li>
+                                {% endif %}
 
-                {% for i in articles.paginator.page_range %}
-                   {% if articles.number == i %}
-                      <li class="page-item active">
-                        <a class="page-link">{{i}}</a>
-                      </li>
-                   {% else %}
-                      <li class="page-item">
-                        <a class="page-link" href="?page={{i}}">{{i}}</a>
-                      </li>
-                   {% endif%}
-                {%endfor%}
-                {% if articles.has_next %}
-                  <li class="page-item">
-                    <a class="page-link" href="?page={{articles.next_page_number}}">&raquo;</a>
-                  </li>
-                {% else %}
-                  <li class="page-item disabled">
-                    <a class="page-link" href="">&raquo;</a>
-                  </li>
-                {%endif%}
-              </ul>
-            {% endif%}
-          </div>
+                                {% for i in articles.paginator.page_range %}
+                                    {% if articles.number == i %}
+                                        <li class="page-item active">
+                                            <a class="page-link">{{ i }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if articles.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ articles.next_page_number }}">&raquo;</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="">&raquo;</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-      </div>
-</div>
-</html>
+    </div>
+    </html>
 
 {% endblock %}
