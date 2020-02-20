@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from .models import Product
-from .models import Category
+from .models import Category, Comment
 from django.core.paginator import Paginator
+from .forms import addComment
 
 
 # Create your views here.
@@ -20,18 +21,16 @@ def articles(request):
     return render(request, 'articles/products.html', context)
 
 
-# TODO : REPAIR SHOW BY CATEGORY FILTER
+# TODO : REPAIR SHOW BY CATEGORY HIERARCHIC FILTER
 
 def show_category(request, hierarchy=None):
     category_slug = hierarchy.split('/')
     category_queryset = list(Category.objects.all())
     all_slugs = [x.slug for x in category_queryset]
-    print(category_slug)
     parent = None
     categories = Category.objects.all()
     for slug in category_slug:
         if slug in all_slugs:
-            #parent = get_object_or_404(Category, slug=slug, parent=parent)
             filteredArticels = Product.by_category(slug=slug)
             paginator = Paginator(filteredArticels, 3)  # show 6 articles per page
             page = request.GET.get('page')
@@ -40,8 +39,13 @@ def show_category(request, hierarchy=None):
             instance = get_object_or_404(Product, slug=slug)
             breadcrumbs_link = instance.get_cat_list()
             category_name = [' '.join(i.split('/')[-1].split('-')) for i in breadcrumbs_link]
+            try:
+                comments = Comment.objects.filter(ProductId=instance)
+            except Comment.DoesNotExist:
+                comments = None
             breadcrumbs = zip(breadcrumbs_link, category_name)
-            return render(request, 'articles/product.html', {'instance': instance, 'breadcrumbs': breadcrumbs})
+
+            return render(request, 'articles/product.html', {'instance': instance, 'comments': comments, 'breadcrumbs': breadcrumbs})
 
     return render(request, 'articles/products.html',
                   {'articles': paged_articles, 'categories': categories})
