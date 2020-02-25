@@ -1,30 +1,46 @@
 {% extends 'base.html'%}
 {% block content%}
+    {% load static %}
+    {% load i18n %}
 <main class="page product-page">
         <section class="clean-block clean-product dark">
             <div class="container">
                 <div class="block-heading">
-                    <h2 class="text-info">Product Page</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
+                    <h2 class="text-info">{% trans 'Product Page' %}</h2>
                 </div>
                 <div class="block-content">
                     <div class="product-info">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="gallery">
-                                    <div class="sp-wrap"><a href="assets/img/tech/image1.jpg"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image1.jpg"></a><a href="assets/img/tech/image1.jpg"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image1.jpg"></a><a href="assets/img/tech/image1.jpg"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image1.jpg"></a></div>
+                                    <div class="sp-wrap">
+                                        {% if instance.mainImage %}<a href="{{ instance.mainImage.url }}"><img class="img-fluid d-block mx-auto" src="{{ instance.mainImage.url }}"></a>{% endif %}
+                                        {% if instance.SecondImage %}<a href="{{ instance.SecondImage.url }}"><img class="img-fluid d-block mx-auto" src="{{ instance.SecondImage.url }}"></a>{% endif %}
+                                       {% if instance.ThirdImage %} <a href="{{ instance.ThirdImage.url }}"><img class="img-fluid d-block mx-auto" src="{{ instance.ThirdImage.url }}"></a>{% endif %}
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="info">
-                                    <h3>Lorem Ipsum</h3>
-                                    <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
+                                    <h3>{{ instance.name }}</h3>
+                                    <div class="rating">
+                                          {% with ''|center:instance.overallRating as range %}
+
+                                       <div class="rating">
+                                           {% for _ in range %}
+                                                <img src="{% static '/img/star.svg'%}">
+
+                                        {% endfor %}
+                                                 </div>
+                                        {% endwith %}
+                                         </div>
                                     <div class="price">
-                                        <h3>$300.00</h3>
+                                        <h3>${{ instance.price }}</h3>
                                     </div><button class="btn btn-primary" type="button"><i class="icon-basket"></i>Add to Cart</button>
                                     <div class="summary">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Vestibulum diam risus, sagittis at fringilla at, pulvinar vel risus. Vestibulum dignissim
-                                            eu nulla eu imperdiet. Morbi mollis tellus a nunc vestibulum consequat. Quisque tristique elit et nibh dapibus sodales. Nam sollicitudin a urna sed iaculis.</p>
+                                        <p>
+                                    {{ instance.preview_text }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -33,35 +49,23 @@
                     <div class="product-info">
                         <div>
                             <ul class="nav nav-tabs" id="myTab">
-                                <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#description" id="description-tab">Description</a></li>
-                                <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#specifications" id="specifications-tabs">Specifications</a></li>
-                                <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#reviews" id="reviews-tab">Reviews</a></li>
+                                <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#description" id="description-tab">{% trans 'Description' %}</a></li>
+                                <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#specifications" id="specifications-tabs">{% trans 'Specifications' %} </a></li>
+                                <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#reviews" id="reviews-tab">{% trans 'Reviews' %} </a></li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane active fade show description" role="tabpanel" id="description">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing
-                                        elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                    <p>
+                                        {{ instance.detail_text }}
+                                    </p>
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/tech/image3.png"></figure>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <h4>Lorem Ipsum</h4>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-7 right">
-                                            <h4>Lorem Ipsum</h4>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <figure class="figure"><img class="img-fluid figure-img" src="assets/img/tech/image3.png"></figure>
+                                            <figure class="figure"><img class="img-fluid figure-img" src="{{ instance.mainImage.url }}"></figure>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade show specifications" role="tabpanel" id="specifications">
-                                    <div class="table-responsive table-bordered">
+                                   {% comment %} <div class="table-responsive table-bordered">
                                         <table class="table table-bordered">
                                             <tbody>
                                                 <tr>
@@ -83,29 +87,41 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    {% endcomment %}
                                 </div>
                                 <div class="tab-pane fade show" role="tabpanel" id="reviews">
-                                    <div class="reviews">
+                                <div class="reviews">
+{% if user.is_authenticated %}
+    <h3>{% trans 'Add review' %}</h3>
+    <form id="commentInsert" action="/logout/" method="post" >
+    {% csrf_token %}
+    </form>
+{% endif %}
+                                {% if comments %}
+                                    {% for comment in comments %}
+
+
                                         <div class="review-item">
-                                            <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-empty.svg"></div>
-                                            <h4>Incredible product</h4><span class="text-muted"><a href="#">John Smith</a>, 20 Jan 2018</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                            {% with ''|center:comment.Rating as range %}
+
+                                       <div class="rating">
+                                           {% for _ in range %}
+                                                <img src="{% static '/img/star.svg'%}">
+
+                                        {% endfor %}
+                                                 </div>
+                                        {% endwith %}
+
+                                            <h4> {{ comment.title }} </h4><span class="text-muted"><a href="#">{{ comment.UserId }}</a>, {{ comment.date }}</span>
+                                            <p>{{ comment.content }}</p>
                                         </div>
-                                    </div>
-                                    <div class="reviews">
-                                        <div class="review-item">
-                                            <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-empty.svg"></div>
-                                            <h4>Incredible product</h4><span class="text-muted"><a href="#">John Smith</a>, 20 Jan 2018</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        </div>
-                                    </div>
-                                    <div class="reviews">
-                                        <div class="review-item">
-                                            <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-empty.svg"></div>
-                                            <h4>Incredible product</h4><span class="text-muted"><a href="#">John Smith</a>, 20 Jan 2018</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        </div>
-                                    </div>
+
+                                    {% endfor %}
+                                {% else %}
+                                    No comments or reviews for this product
+
+                                {% endif %}
+                                 </div>
                                 </div>
                             </div>
                         </div>

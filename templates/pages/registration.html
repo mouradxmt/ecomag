@@ -1,22 +1,25 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% block content %}
-  <div class="container">
-    <div class="jumbotron">
-      {% if registered %}
-        <h1>Thank you for registering!</h1>
-      {% else %}
-        <div class="block-heading">
-                    <h2 class="text-info">{% trans title %}</h2>
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-heading">
+                {% if registered %}
+                    <h1>Thank you for registering!</h1>
+                {% else %}
+                    <h2 class="text-info">{% trans 'Register' %}</h2>
+
+                    </div>
+
+                    <form enctype="multipart/form-data" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="{% trans 'Register' %}" class="btn btn-primary" />
+                    </form>
+
+                {% endif %}
         </div>
-<form enctype="multipart/form-data" method="POST">
-          {% csrf_token %}
-          {{ user_form.as_p }}
-          {{ profile_form.as_p }}
-          <input type="submit" name="" value="Register">
-        </form>
-        
-      {% endif %}
-    </div>
-  </div>
+        </div>
+    </section>
 {% endblock %}
