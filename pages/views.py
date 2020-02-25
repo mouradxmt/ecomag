@@ -5,10 +5,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
+from articles.models import Product
 
 def index(request):
-    return render(request, 'pages/index.html')
+    new_articles = Product.objects.order_by('-date')[:3]
+    context = {
+        'articles': new_articles
+    }
+    return render(request, 'pages/index.html', context)
 
 
 @login_required
