@@ -36,7 +36,7 @@
                                          </div>
                                     <div class="price">
                                         <h3>${{ instance.price }}</h3>
-                                    </div><button class="btn btn-primary" type="button"><i class="icon-basket"></i>Add to Cart</button>
+                                    </div><a class="btn btn-primary" href="{% url 'addCart' instance.id %}"><i class="icon-basket"></i>Add to Cart</a>
                                     <div class="summary">
                                         <p>
                                     {{ instance.preview_text }}
@@ -64,37 +64,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade show specifications" role="tabpanel" id="specifications">
-                                   {% comment %} <div class="table-responsive table-bordered">
-                                        <table class="table table-bordered">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="stat">Display</td>
-                                                    <td>5.2"</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="stat">Camera</td>
-                                                    <td>12MP</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="stat">RAM</td>
-                                                    <td>4GB</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="stat">OS</td>
-                                                    <td>iOS</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    {% endcomment %}
-                                </div>
-                                <div class="tab-pane fade show" role="tabpanel" id="reviews">
+                                  <div class="tab-pane fade show" role="tabpanel" id="reviews">
                                 <div class="reviews">
 {% if user.is_authenticated %}
     <h3>{% trans 'Add review' %}</h3>
-    <form id="commentInsert" action="/logout/" method="post" >
+    <form id="commentInsert" method="post" >
     {% csrf_token %}
+    {{ comments.addComment.as_p }}
+      <input type="submit" value="{% trans 'comment' %}" class="btn btn-primary" />
     </form>
 {% endif %}
                                 {% if comments %}
@@ -123,6 +100,32 @@
                                 {% endif %}
                                  </div>
                                 </div>
+                                <div class="tab-pane fade show specifications" role="tabpanel" id="specifications">
+                                   {% comment %} <div class="table-responsive table-bordered">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="stat">Display</td>
+                                                    <td>5.2"</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">Camera</td>
+                                                    <td>12MP</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">RAM</td>
+                                                    <td>4GB</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">OS</td>
+                                                    <td>iOS</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% endcomment %}
+                                </div>
+
                             </div>
                         </div>
                     </div>

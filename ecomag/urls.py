@@ -11,6 +11,7 @@ urlpatterns = [
                   # path('', pages_views.index),
                   path('', include('pages.urls')),
                   path('articles/', include('articles.urls')),
+                  path('cart/', include('cart.urls')),
                   path('admin/', admin.site.urls),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

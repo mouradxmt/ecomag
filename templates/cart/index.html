@@ -1,0 +1,55 @@
+{% extends 'base.html'%}
+{% block content%}
+    {% load static %}
+    {% load i18n %}
+
+    <main class="page shopping-cart-page">
+        <section class="clean-block clean-cart dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Shopping Cart</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
+                </div>
+                <div class="content">
+                    <div class="row no-gutters">
+                        <div class="col-md-13 col-lg-9">
+                            <div class="items">
+                               {% if cart %}
+                                {% for item in cart %}
+
+                                <div class="product">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col-md-3">
+                                            <div class="product-image"><img class="img-fluid d-block mx-auto image" src="{{ item.ProductId.mainImage.url }}"></div>
+                                        </div>
+                                        <div class="col-md-4 product-info"><a href="{% url 'category' item.ProductId.slug %}" class="product-name">{{ item.ProductId.name }}</a>
+                                            <div class="product-specs">
+                                                {{ item.ProductId.preview_text | truncatewords:10}}
+                                            </div>
+                                        </div>
+                                        <div class="col-4 col-md-1 quantity"><label class="d-none d-md-block" for="quantity">{% trans 'Quantity' %}</label><input type="number" value="{{ item.amount }}" id="number" class="form-control quantity-input"></div>
+                                        <div class="col-4 col-md-2 price"><span>{% widthratio item.ProductId.price 1 item.amount %}   </span></div>
+                                        <div class="col-1"><a class="btn btn-sm btn-danger" href="{% url 'removeCart' item.pk %}"><i class="icon-trash"></i>Remove</a></div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% else %}
+                                   Your cart is empty
+                            {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-13 col-lg-3">
+                            <div class="summary">
+                                <h3>Summary</h3>
+                                <h4><span class="text">Subtotal</span><span class="price">0</span></h4>
+                                <h4><span class="text">Discount</span><span class="price">0</span></h4>
+                                <h4><span class="text">Shipping</span><span class="price">0</span></h4>
+                                <h4><span class="text">Total</span><span class="price">{{cart.total.Total}}</span></h4><button class="btn btn-primary btn-block btn-lg" type="button">Checkout</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

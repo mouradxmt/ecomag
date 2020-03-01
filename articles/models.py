@@ -4,7 +4,7 @@ from django.db import models
 from datetime import datetime
 from django.utils.translation import gettext as _
 from django.utils.text import slugify
-
+from django.contrib.auth.models import User
 from ecomag import settings
 from pages.models import UserProfileInfo
 
@@ -111,14 +111,14 @@ class Product(models.Model):
 
     @staticmethod
     def by_category(slug):
-        category_queryset = Category.objects.filter(slug=slug).order_by('date')
-        return Product.objects.filter(category=category_queryset[0]).all()
+        category_queryset = Category.objects.filter(slug=slug)
+        return Product.objects.filter(category=category_queryset[0]).order_by('-date')[:3]
 
 #Comments
 class Comment(models.Model):
-    UserId = models.ForeignKey(UserProfileInfo, on_delete=models.DO_NOTHING, verbose_name=_('User'))
+    UserId = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name=_('User'))
     ProductId = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('Product'))
-    title = models.CharField(max_length=50, verbose_name=_('Title'))
+    title = models.CharField(max_length=50, default='', verbose_name=_('Title'))
     Rating = models.IntegerField(verbose_name=_('Rating'))
     content = models.TextField(max_length=250, verbose_name=_('Comment'))
     date = models.DateTimeField(default=datetime.now, editable=False)
@@ -128,7 +128,7 @@ class Comment(models.Model):
 
 #panier
 class Cart(models.Model):
-    UserId = models.ForeignKey(UserProfileInfo, on_delete=models.DO_NOTHING)
+    UserId = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     ProductId = models.ForeignKey(Product, on_delete=models.CASCADE)
     amount = models.IntegerField(verbose_name='amount', default=1)
 

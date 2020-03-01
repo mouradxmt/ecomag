@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from .models import Product
-from .models import Category, Comment
+from .models import Category, Comment, UserProfileInfo
 from django.core.paginator import Paginator
 from .forms import addComment
 
@@ -9,7 +9,7 @@ from .forms import addComment
 
 
 def articles(request):
-    articles = Product.objects.all()
+    articles = Product.objects.order_by('-date')
     categories = Category.objects.all()
     paginator = Paginator(articles, 3)  # show 6 articles per page
     page = request.GET.get('page')
@@ -44,6 +44,15 @@ def show_category(request, hierarchy=None):
             except Comment.DoesNotExist:
                 comments = None
             breadcrumbs = zip(breadcrumbs_link, category_name)
+            comments.addComment = addComment
+            if request.method == 'POST':
+                form = addComment(data=request.POST)
+                if form.is_valid():
+                    comment = form.save(commit=False)
+                    comment.UserId = request.user
+                    comment.ProductId = instance
+                    comment.save()
+                    return redirect(request.get_full_path())
 
             return render(request, 'articles/product.html', {'instance': instance, 'comments': comments, 'breadcrumbs': breadcrumbs})
 
@@ -65,6 +74,7 @@ def articles_category(request, slug='homme'):
 
 
 def product(request):
+
     return render(request, 'articles/product.html')
 
 
