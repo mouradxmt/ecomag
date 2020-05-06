@@ -132,3 +132,6 @@ class Cart(models.Model):
     ProductId = models.ForeignKey(Product, on_delete=models.CASCADE)
     amount = models.IntegerField(verbose_name='amount', default=1)
 
+    def getPriceUnit(self):
+        return self.amount * self.ProductId.price
+
