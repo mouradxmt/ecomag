@@ -74,7 +74,7 @@
             el={"productId":"{{c.ProductId.id}}","price":"{{ c.ProductId.price | stringformat:"i"}}","amount":"{{c.amount}}"};
             orderList.push(el);
         {% endfor %}
-        console.log(orderList);
+
 
 //console.log(JSON.stringify({orderList}));
 	 	function completeOrder(){
@@ -87,7 +87,7 @@
 	 				'X-CSRFToken':csrftoken,
 	 			},
 	 			body:JSON.stringify({orderList})
-	 		}).then(response => console.log(response))
+	 		})
 	 	}
 
         paypal.Buttons({
@@ -115,8 +115,7 @@
                 return actions.order.capture().then(function(details) {
                     // Show a success message to the buyer
                     completeOrder()
-                    window.location.replace("{% url 'showCart' %}");
-                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                    window.location.replace("{% url 'paymentSucess' %}");
                 });
             }
 

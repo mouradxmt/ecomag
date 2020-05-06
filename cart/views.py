@@ -1,6 +1,6 @@
 from django.core.serializers import json
 from django.db.models import FloatField, F, Sum
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import json
 from django.shortcuts import render, get_object_or_404, redirect
 from articles.models import Cart, Product
@@ -19,7 +19,7 @@ def showCart(request):
 
 def addCart(request, id):
     Cart.objects.create(ProductId=Product.objects.get(pk=id), UserId=request.user, amount=1)
-    return showCart(request)
+    return redirect("showCart")
 
 
 def removeCart(request, id):
@@ -41,17 +41,10 @@ def paymentComplet(request):
             price=item['price'],
             quantity=item['amount']
         )
-    # product = Product.objects.get(id=body['productId'])
 
-    #print(body.oderList)
     Cart.objects.filter(UserId=request.user).delete()
     return redirect("showCart")
-# Create your views here.
-# {
-# "orderList":
-#   [
-#   {"productId":"8","amount":"1"},
-#   {"productId":"8","amount":"1"},
-#   {"productId":"8","amount":"1"}
-#   ]
-# }
+
+
+def paymentSucess(request):
+    return HttpResponse("Payment completed with success<script>window.location.replace(\"../\");</script>")
