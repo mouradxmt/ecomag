@@ -8,7 +8,6 @@
             <div class="container">
                 <div class="block-heading">
                     <h2 class="text-info">Shopping Cart</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
                 </div>
                 <div class="content">
                     <div class="row no-gutters">
@@ -67,13 +66,19 @@
 		    }
 		    return cookieValue;
 		}
-		var csrftoken = getCookie('csrftoken');
+		let csrftoken = getCookie('csrftoken');
 
 	 	let total = {{cart.total | stringformat:"i" }};
-	 	var orderList = '{{cart}}';
-console.log(JSON.stringify({orderList}));
+	 	let orderList = [];
+        {% for c in cart %}
+            el={"productId":"{{c.ProductId.id}}","price":"{{ c.ProductId.price | stringformat:"i"}}","amount":"{{c.amount}}"};
+            orderList.push(el);
+        {% endfor %}
+        console.log(orderList);
+
+//console.log(JSON.stringify({orderList}));
 	 	function completeOrder(){
-	 		var url = "{% url 'showCart' %}";
+	 		var url = "{% url 'complete' %}";
 
 	 		fetch(url, {
 	 			method:'POST',
@@ -82,7 +87,7 @@ console.log(JSON.stringify({orderList}));
 	 				'X-CSRFToken':csrftoken,
 	 			},
 	 			body:JSON.stringify({orderList})
-	 		})
+	 		}).then(response => console.log(response))
 	 	}
 
         paypal.Buttons({
@@ -109,6 +114,8 @@ console.log(JSON.stringify({orderList}));
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
                     // Show a success message to the buyer
+                    completeOrder()
+                    window.location.replace("{% url 'showCart' %}");
                     alert('Transaction completed by ' + details.payer.name.given_name + '!');
                 });
             }
