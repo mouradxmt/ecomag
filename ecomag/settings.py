@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'da19h3s6vrk14r',
         'USER': 'qtzrkhfgyhuxjv',
         'PASSWORD': 'f922f97f02ea1f6f6728b264eec013203b78f4fb25ed355c4c9fc05df2de0e22',
-        'HOST': 'ec2-54-246-89-234.eu-west-1.compute.amazonaws.com:5432'
+        'HOST': 'ec2-54-246-89-234.eu-west-1.compute.amazonaws.com'
     }
 }
 # Password validation
