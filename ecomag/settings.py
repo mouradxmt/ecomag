@@ -78,25 +78,16 @@ WSGI_APPLICATION = 'ecomag.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'ecomagDb',
-#        'USER': 'postgres',
-#        'PASSWORD': '159753',
-#        'HOST': 'localhost'
-#    }
-#}
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'da19h3s6vrk14r',
-        'USER': 'qtzrkhfgyhuxjv',
-        'PASSWORD': 'f922f97f02ea1f6f6728b264eec013203b78f4fb25ed355c4c9fc05df2de0e22',
-        'HOST': 'ec2-54-246-89-234.eu-west-1.compute.amazonaws.com'
+        'NAME': 'ecomagDb',
+        'USER': 'postgres',
+        'PASSWORD': '159753',
+        'HOST': 'localhost'
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
