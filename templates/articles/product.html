@@ -40,7 +40,7 @@
                                     {% if user.is_authenticated %}
                                     <a class="btn btn-primary" href="{% url 'addCart' instance.id %}"><i class="fas fa-shopping-basket"></i> Add to Cart</a>
                                     {% else %}
-                                    <div class="red">Veuillez s'authentifiez pour ajouter au panier</div>
+                                    <div class="text-danger text-center">Veuillez s'authentifiez pour ajouter au panier</div>
 
                                     {% endif %}
                                     <div class="summary">
