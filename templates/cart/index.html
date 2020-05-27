@@ -27,7 +27,7 @@
                                             </div>
                                         </div>
                                         <!--<div class="col-4 col-md-1 quantity"><label class="d-none d-md-block" for="quantity">{% trans 'Quantity' %}</label><input type="number" value="{{ item.amount }}" id="number" class="form-control quantity-input"></div>-->
-                                        <div class="col-4 col-md-2 price"><span>{% widthratio item.ProductId.price 1 item.amount %}  MAD </span></div>
+                                        <div class="col-4 col-md-2 price"><span>${% widthratio item.ProductId.price 1 item.amount %} </span></div>
                                         <div class="col-12 col-md-2"><a class="btn btn-sm btn-danger" href="{% url 'removeCart' item.pk %}"><i class="fa fa-trash"></i> Remove</a></div>
                                     </div>
                                 </div>
