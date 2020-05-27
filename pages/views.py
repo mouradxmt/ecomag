@@ -44,7 +44,7 @@ def aboutus(request):
     return render(request, 'pages/aboutus.html')
 
 
-def aboutus(request):
+def contactus(request):
     return render(request, 'pages/contactus.html')
 
 
