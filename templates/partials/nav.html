@@ -16,8 +16,8 @@
                     <form id="logoutForm" action="/logout/" method="post" class="navbar-right">
                         {% csrf_token %}
                         <ul class="nav navbar-nav navbar-right">
-                            <li><span class="navbar-item"><strong >{% firstof user.get_short_name user.get_username %} </strong></span></li>
-                            <li><a href="javascript:document.getElementById('logoutForm').submit()"> <span class="iconify" data-icon="simple-line-icons:logout" data-inline="false"></span> {% trans 'Log out' %}</a></li>
+                            <li class="navbar navbar-item"><strong >{% firstof user.get_short_name user.get_username %} </strong></li>
+                            <li class="navbar navbar-item"><a href="javascript:document.getElementById('logoutForm').submit()"> <span class="iconify" data-icon="simple-line-icons:logout" data-inline="false"></span> {% trans 'Log out' %}</a></li>
                         </ul>
                     </form>
                     {% else %}
