@@ -39,6 +39,8 @@ def register(request):
 
     return render(request, 'pages/registration.html', {'form': form, })
 
+def aboutus(request):
+    return render(request, 'pages/aboutus.html')
 
 def user_login(request):
     if request.method == 'POST':

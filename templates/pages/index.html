@@ -70,7 +70,7 @@
                           <h5 class="card-title" style="float:right"><span class="badge badge-pill badge-primary">${{ listing.price }}</span></h5>
                            <h5 class="card-title" style="color:#007bff">{{ listing.category }}</h5>
                           <hr/>
-                          <a href="#" class="btn btn-info btn-center">Details</a>
+                          <a href="{% url 'category' listing.slug %}" class="btn btn-info btn-center">Details</a>
                         </div>
                       </div>
                   </div>
