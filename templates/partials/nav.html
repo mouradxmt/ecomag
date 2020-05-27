@@ -9,7 +9,8 @@
                 {% if user.is_authenticated %}
                  <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'showCart' %}">{% trans 'Cart'%}</a></li>
                 {% endif %}
-                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'aboutus' %}">Contact Us</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'aboutus' %}">About Us</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'contactus' %}">Contact Us</a></li>
             </ul>
                 {% if user.is_authenticated %}
                     <form id="logoutForm" action="/logout/" method="post" class="navbar-right">
