@@ -1,6 +1,9 @@
 # Django Project Template
 
 ECOMAG is a  Django based plateform for e-commerce, it was made initially by _(MTOUAA Mourad, RAMDANI Chaimae, KHADDAM Allah Hajar) in 2019/2020 as final year's project guided by Pr. CHETIOUI Kaouthar, and it is intended to be started as a real life plateform .
+## Live preview
+The project is deployed in _Heroku_ and  a live preview of it can be found in [`https://ecomag.herokuapp.com`](https://ecomag.herokuapp.com).
+
 ## Getting Started
 ### Prerequisites
 * Python  >=3.7
